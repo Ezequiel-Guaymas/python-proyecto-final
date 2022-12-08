@@ -6,33 +6,34 @@ class App:
         #setting title
         root.title(proyecto)
         #setting window size
-        width=555
-        height=224
+        width=498
+        height=220
         screenwidth = root.winfo_screenwidth()
         screenheight = root.winfo_screenheight()
         alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         root.geometry(alignstr)
         root.resizable(width=False, height=False)
 
-        GButton_803=tk.Button(root)
-        GButton_803["bg"] = "#f0f0f0"
-        ft = tkFont.Font(family='Times',size=14)
-        GButton_803["font"] = ft
-        GButton_803["fg"] = "#000000"
-        GButton_803["justify"] = "center"
-        GButton_803["text"] = "ABRIR SUPERMARKET"
-        GButton_803.place(x=40,y=120,width=452,height=42)
-        GButton_803["command"] = self.GButton_803_command
+        GButton_522=tk.Button(root)
+        GButton_522["bg"] = "#f0f0f0"
+        ft = tkFont.Font(family='Times',size=13)
+        GButton_522["font"] = ft
+        GButton_522["fg"] = "#e82727"
+        GButton_522["justify"] = "center"
+        GButton_522["text"] = "ABRIR SUPERMARKET"
+        GButton_522.place(x=60,y=140,width=362,height=37)
+        GButton_522["command"] = self.GButton_522_command
 
-        GMessage_458=tk.Message(root)
-        ft = tkFont.Font(family='Times',size=16)
-        GMessage_458["font"] = ft
-        GMessage_458["fg"] = "#333333"
-        GMessage_458["justify"] = "center"
-        GMessage_458["text"] = "BIENVENIDO"
-        GMessage_458.place(x=120,y=100,width=400,height=60)
+        GLabel_3=tk.Label(root)
+        GLabel_3["bg"] = "#cc0000"
+        ft = tkFont.Font(family='Times',size=24)
+        GLabel_3["font"] = ft
+        GLabel_3["fg"] = "#f6f0f0"
+        GLabel_3["justify"] = "center"
+        GLabel_3["text"] = "BIENVENIDO"
+        GLabel_3.place(x=90,y=60,width=290,height=42)
 
-    def GButton_803_command(self):
+    def GButton_522_command(self):
         print("command")
 
 if __name__ == "__main__":
@@ -41,3 +42,18 @@ if __name__ == "__main__":
     root.iconbitmap(default=f"{proyecto}.ico")
     app = App(root,  proyecto.capitalize())
     root.mainloop()
+
+
+    
+
+    '''def __init__(self, root, proyecto):
+        #setting title
+        root.title(proyecto)
+
+if __name__ == "__main__":
+    proyecto = "supermarket"
+    root = tk.Tk()
+    root.iconbitmap(default=f"{proyecto}.ico")
+    app = App(root,  proyecto.capitalize())
+    root.mainloop()
+    '''
