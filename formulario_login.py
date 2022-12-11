@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
 import tkinter.messagebox as tkMsgBox
-from frmuser import User
+from formulario_user import User
 from frmdashboard import Dashboard
 import bll.usuarios as user
 
