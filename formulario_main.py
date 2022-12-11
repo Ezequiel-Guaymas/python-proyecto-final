@@ -1,10 +1,13 @@
 import tkinter as tk
 import tkinter.font as tkFont
+from formulario_login import Login
+from dal.db import Db
 
 class App:
-    def __init__(self, root, proyecto):
+    def __init__(self, root, title):
+        self.root = root
         #setting title
-        root.title(proyecto)
+        root.title(title)
         #setting window size
         width=498
         height=220
@@ -20,9 +23,9 @@ class App:
         GButton_522["font"] = ft
         GButton_522["fg"] = "#e82727"
         GButton_522["justify"] = "center"
-        GButton_522["text"] = "ABRIR SUPERMARKET"
+        GButton_522["text"] = "ABRIR "+ title.upper()
         GButton_522.place(x=60,y=140,width=362,height=37)
-        GButton_522["command"] = self.GButton_522_command
+        GButton_522["command"] = self.abrir_login
 
         GLabel_3=tk.Label(root)
         GLabel_3["bg"] = "#cc0000"
@@ -33,27 +36,14 @@ class App:
         GLabel_3["text"] = "BIENVENIDO"
         GLabel_3.place(x=90,y=60,width=290,height=42)
 
-    def GButton_522_command(self):
-        print("command")
+    def abrir_login(self):
+        Login(self.root)
 
 if __name__ == "__main__":
-    proyecto = "supermarket"
+    #Db.crear_tablas()
+    #Db.poblar_tablas()
+    proyecto = "Supermarket"
     root = tk.Tk()
     root.iconbitmap(default=f"{proyecto}.ico")
     app = App(root,  proyecto.capitalize())
     root.mainloop()
-
-
-    
-
-    '''def __init__(self, root, proyecto):
-        #setting title
-        root.title(proyecto)
-
-if __name__ == "__main__":
-    proyecto = "supermarket"
-    root = tk.Tk()
-    root.iconbitmap(default=f"{proyecto}.ico")
-    app = App(root,  proyecto.capitalize())
-    root.mainloop()
-    '''
