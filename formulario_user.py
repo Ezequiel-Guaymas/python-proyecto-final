@@ -6,6 +6,7 @@ import tkinter.font as tkFont
 import tkinter.messagebox as tkMsgBox
 import bll.usuarios as user
 import bll.roles as rol
+from datetime import date
 
 class User(Toplevel):
     def __init__(self, master=None, isAdmin = False, user_id = None):        
@@ -285,12 +286,15 @@ class User(Toplevel):
                 GLineEdit_728.insert(0, usuario[1])
                 GLineEdit_893.insert(0, usuario[2])
                 GLineEdit_41.insert(0, usuario[3])
-                GLineEdit_585.insert(0, usuario[4])
+                fecha_nac = date(int(usuario[4][:4]), int(usuario[4][5:7]), int(usuario[4][8:]))
+                GLineEdit_585.insert(0, fecha_nac.strftime(r"%d/%m/%Y"))
                 GLineEdit_655.insert(0, usuario[5])
-                GLineEdit_908.insert(0, usuario[6]) 
-                GLineEdit_944.insert(0, usuario[7])
-                GLineEdit_920.insert(0, usuario[8])               
-                cb_roles.set(usuario[8])
+                GLineEdit_908.insert(0, usuario[6])
+                GLineEdit_534.insert(0, usuario[7])
+                GLineEdit_944.insert(0, usuario[8])
+                GLineEdit_944["state"] = "disabled"
+                GLineEdit_920.insert(0, usuario[9])               
+                cb_roles.set(usuario[10])
 
     def get_value(self, name):
         return self.nametowidget(name).get()
@@ -308,7 +312,9 @@ class User(Toplevel):
             dni = self.get_value("txtDni")            
             fecha_nac = self.get_value("txtFechaNac")            
             email = self.get_value("txtEmail")
-            domicilio = self.get_value("txtDomicilio")         
+            domicilio = self.get_value("txtDomicilio")
+            telefono = self.get_value("txtNroTelefonico") 
+                    
             usuario = self.get_value("txtUsuario")
             contrasenia = self.get_value("txtContrasenia")            
             confirmacion = self.get_value("txtConfirmacion")

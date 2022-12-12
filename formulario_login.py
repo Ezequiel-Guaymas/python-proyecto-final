@@ -18,8 +18,8 @@ class Login(tk.Toplevel):
         #setting window size
         width=585
         height=186
-        screenwidth = self.winfo_screenwidth()
-        screenheight = self.winfo_screenheight()
+        screenwidth = master.winfo_screenwidth()
+        screenheight = master.winfo_screenheight()
         alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         self.geometry(alignstr)
         self.resizable(width=False, height=False)
@@ -101,9 +101,17 @@ class Login(tk.Toplevel):
             contrasenia = txtContrasenia.get()
 
             if usuario != "":
-                if user.validar(usuario, contrasenia):
-                    Dashboard(self.master)
-                    self.destroy()
+                if user.validar(usuario, contrasenia):                    
+                    usuario = user.obtener_nombre_usuario(usuario)
+                    if usuario is not None:
+                        if usuario[8] == "Administrador":
+                            Dashboard(self.master)
+                            self.destroy()
+                        elif usuario[8] == "Cliente":
+                            # TODO chequear el rol del usuario para abrir el menu/ventana correspondiente
+                            print("Mostrar pantalla para usuario con rol de Cliente")
+                    else:
+                        tkMsgBox.showerror(self.master.title(), "Se produjo un error al obtener los datos del usuario, reintente nuevamente")
                 else:
                     tkMsgBox.showwarning(self.master.title(), "Usuario/Contraseña incorrecta")
             else:
