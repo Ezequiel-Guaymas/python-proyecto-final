@@ -252,7 +252,7 @@ class User(Toplevel):
         if isAdmin:
             cb_roles = ttk.Combobox(self, state="readonly", values=list(roles.values()), name="cbRoles")
         else:
-            cb_roles = ttk.Combobox(self, state="disabled", values=list(roles.values()), name="cbRoles")
+            cb_roles = ttk.Combobox(self, state="disable", values=list(roles.values()), name="cbRoles")
             cb_roles.set(roles[4])
         cb_roles.place(x=200,y=500,width=149,height=25)
 
@@ -295,6 +295,8 @@ class User(Toplevel):
                 GLineEdit_944["state"] = "disabled"
                 GLineEdit_920.insert(0, usuario[9])               
                 cb_roles.set(usuario[10])
+
+    
 
     def get_value(self, name):
         return self.nametowidget(name).get()
@@ -345,4 +347,6 @@ class User(Toplevel):
 
     def cancelar(self):
         self.destroy()
+
+    
 

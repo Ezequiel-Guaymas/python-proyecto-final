@@ -33,10 +33,11 @@ class Db:
                             "Fecha_Nacimiento"	TEXT(10) NOT NULL,
                             "Email"	TEXT(30) NOT NULL,
                             "Domicilio"	TEXT(30) NOT NULL,
-                            "Nro.Telefonico" INTEGER(20) NOT NULL,
-                            "Nombre_Usuario" TEXT(30) NOT NULL UNIQUE,
+                            "Nro_Telefonico" INTEGER(20) NOT NULL,
+                            "Usuario" TEXT(30) NOT NULL UNIQUE,
                             "Contraseña" TEXT(30) NOT NULL UNIQUE,
                             "Rol_Id" INTEGER,
+                            "Activo"	INTEGER NOT NULL DEFAULT 1,
                             "Pedido_id"	INTEGER,
                             PRIMARY KEY("Id_usuario" AUTOINCREMENT),
                             FOREIGN KEY("Rol_Id") REFERENCES "Roles"("Id_rol"),
@@ -45,6 +46,7 @@ class Db:
         sql_roles = '''CREATE TABLE "Roles" (
                             "Id_rol"	INTEGER NOT NULL,
                             "Rol"	TEXT(50) NOT NULL UNIQUE,
+                            "Activo"	INTEGER NOT NULL DEFAULT 1,
                             PRIMARY KEY("Id_rol")
                         );'''
 
@@ -55,6 +57,7 @@ class Db:
             for tabla, sql in tablas.items():
                 print(f"Creando tabla {tabla}")
                 cursor.execute(sql)
+                #cnn.commit() #
                 # TODO agregar commit
             
     @staticmethod
@@ -73,9 +76,11 @@ class Db:
             for tabla, sql in tablas.items():
                 print(f"Poblando tabla {tabla}")
                 cursor.execute(f"SELECT COUNT(*) FROM {tabla}")
+                #cnn.commit() #
                 count = int(cursor.fetchone()[0])
                 if count == 0:
                     cursor.execute(sql)
+                    #cnn.commit() #
 
     @staticmethod
     def formato_fecha_db(fecha):
@@ -91,7 +96,7 @@ class Db:
 CREATE TABLE "Usuarios" (
 	"Id_usuario"	INTEGER NOT NULL,
 	"Nombre"	TEXT(40) NOT NULL,
-	"Aapellido"	TEXT(40) NOT NULL,
+	"Apellido"	TEXT(40) NOT NULL,
 	"DNI"	INTEGER(10) NOT NULL,
 	"Sexo"	TEXT(10) NOT NULL,
 	"Nro.Telefonico"	INTEGER(20) NOT NULL,
