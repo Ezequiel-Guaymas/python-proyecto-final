@@ -1,25 +1,25 @@
-from dal.db import Db
+from dal.db2 import Db
 
-def agregar(apellido, nombre, fecha_nacimiento, dni, correo_electronico, usuario, contrasenia, rol_Id):    
-    sql = "INSERT INTO Usuarios(Apellido, Nombre, FechaNacimiento, Dni, CorreoElectronico, Usuario, Contrasenia, RolId) VALUES(?, ?, ?, ?, ?, ?, ?, ?);"
-    parametros = (apellido, nombre, Db.formato_fecha_db(fecha_nacimiento), dni, correo_electronico, usuario, Db.encriptar_contraseña(contrasenia), rol_Id)
+def agregar(nombre, apellido, dni, fecha_nac, email, domicilio, telefono, usuario, contrasenia, rol_Id):    
+    sql = "INSERT INTO Usuarios(Nombre, Apellido, DNI, Fecha_Nacimiento, Email, Domicilio, Nro.Telefonico, Usuario, Contraseña, Rol_Id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+    parametros = (nombre, apellido, dni, Db.formato_fecha_db(fecha_nac), email, domicilio, telefono, Db.encriptar_contraseña(contrasenia), rol_Id)
     Db.ejecutar(sql, parametros)
 
-def actualizar(id, apellido, nombre, fecha_nacimiento, dni, correo_electronico, contrasenia, rol_Id):    
-    sql = "UPDATE Usuarios SET Apellido = ?, Nombre = ?, FechaNacimiento = ?, Dni = ?, CorreoElectronico = ?, Contrasenia = ?, RolId = ? WHERE UsuarioId = ? AND Activo = 1;"
-    parametros = (apellido, nombre, Db.formato_fecha_db(fecha_nacimiento), dni, correo_electronico, Db.encriptar_contraseña(contrasenia), rol_Id, id)
+def actualizar(id, nombre, apellido, dni, fecha_nac, email, domicilio, telefono, contrasenia, rol_Id):    
+    sql = "UPDATE Usuarios SET Nombre = ?, Apellido = ?, Dni = ?, Fecha_Nacimiento = ?, Email = ?, Domicilio = ?, Nro.Telefonico = ?, Contrasenia = ?, Rol_Id = ? WHERE Id_usuario = ? AND Activo = 1;"
+    parametros = (nombre, apellido, dni, Db.formato_fecha_db(fecha_nac), email, domicilio, telefono, Db.encriptar_contraseña(contrasenia), rol_Id, id)
     Db.ejecutar(sql, parametros)    
 
 def eliminar(id, logical = True):    
     if logical:
-        sql = "UPDATE Usuarios SET Activo = 0 WHERE UsuarioId = ? AND Activo = 1;"
+        sql = "UPDATE Usuarios SET Activo = 0 WHERE Id_usuario = ? AND Activo = 1;"
     else:
-        sql = "DELETE FROM Usuarios WHERE UsuarioId = ?;"
+        sql = "DELETE FROM Usuarios WHERE Id_usuario = ?;"
     parametros = (id,)
     Db.ejecutar(sql, parametros)
 
 def listar():
-    sql = '''SELECT u.UsuarioId, u.Apellido, u.Nombre, u.FechaNacimiento, u.Dni, u.CorreoElectronico, u.Usuario, u.RolId, r.Nombre Rol
+    sql = '''SELECT u.Id_usuario, u.Nombre, u.Apellido, u.Dni, u.Fecha_Nacimiento, u.Email, u.Domicilio, u.Nro.Telefonico, u.Usuario, u.Rol_Id, r.Nombre Rol
             FROM Usuarios u
             INNER JOIN Roles r ON u.RolId = r.RolId
             WHERE u.Activo = 1;'''

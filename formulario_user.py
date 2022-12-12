@@ -324,7 +324,7 @@ class User(Toplevel):
             if self.user_id is None:
                 print("Alta de usuario")
                 if not user.existe(usuario):
-                    user.agregar(apellido, nombre, fecha_nac, dni, email, usuario, contrasenia, rol_id)
+                    user.agregar(nombre, apellido, dni, fecha_nac, email, domicilio, telefono, usuario, contrasenia, rol_id)
                     tkMsgBox.showinfo(self.master.title(), "Registro agregado!!!!!!")                
                     try:
                         self.master.refrescar()
@@ -335,7 +335,7 @@ class User(Toplevel):
                     tkMsgBox.showwarning(self.master.title(), "Usuario existente en nuestros registros")
             else:
                 print("Actualizacion de usuario")
-                user.actualizar(self.user_id, apellido, nombre, fecha_nac, dni, email, contrasenia, rol_id)  # TODO ver el tema de la contraseña
+                user.actualizar(self.user_id, nombre, apellido, dni, fecha_nac, email, domicilio, telefono, contrasenia, rol_id)  # TODO ver el tema de la contraseña
                 tkMsgBox.showinfo(self.master.title(), "Registro modificado!!!!!!")                
                 self.master.refrescar()
                 self.destroy()  
