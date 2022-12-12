@@ -40,8 +40,8 @@ class App:
         Login(self.root)
 
 if __name__ == "__main__":
-    #Db.crear_tablas()
-    #Db.poblar_tablas()
+    Db.crear_tablas()
+    Db.poblar_tablas()
     proyecto = "Supermarket"
     root = tk.Tk()
     root.iconbitmap(default=f"{proyecto}.ico")
