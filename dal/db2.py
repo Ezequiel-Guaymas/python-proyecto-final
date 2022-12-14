@@ -25,7 +25,7 @@ class Db:
     
     @staticmethod
     def crear_tablas():
-        sql_usuarios = '''CREATE TABLE "Usuarios" (
+        sql_usuarios = '''CREATE TABLE IF NOT EXISTS "Usuarios" (
                             "Id_usuario"	INTEGER NOT NULL,
                             "Nombre"	TEXT(40) NOT NULL,
                             "Aapellido"	TEXT(40) NOT NULL,
@@ -35,7 +35,7 @@ class Db:
                             "Domicilio"	TEXT(30) NOT NULL,
                             "Nro_Telefonico" INTEGER(20) NOT NULL,
                             "Usuario" TEXT(30) NOT NULL UNIQUE,
-                            "Contraseña" TEXT(30) NOT NULL UNIQUE,
+                            "Contraseña" TEXT(30) NOT NULL,
                             "Rol_Id" INTEGER,
                             "Activo"	INTEGER NOT NULL DEFAULT 1,
                             "Pedido_id"	INTEGER,
@@ -43,9 +43,9 @@ class Db:
                             FOREIGN KEY("Rol_Id") REFERENCES "Roles"("Id_rol"),
                             FOREIGN KEY("Pedido_id") REFERENCES "Pedidos"("Id_pedido")
                         );'''
-        sql_roles = '''CREATE TABLE "Roles" (
+        sql_roles = '''CREATE TABLE IF NOT EXISTS "Roles" (
                             "Id_rol"	INTEGER NOT NULL,
-                            "Rol"	TEXT(50) NOT NULL UNIQUE,
+                            "Rol"	TEXT(50) NOT NULL ,
                             "Activo"	INTEGER NOT NULL DEFAULT 1,
                             PRIMARY KEY("Id_rol")
                         );'''
@@ -62,7 +62,7 @@ class Db:
             
     @staticmethod
     def poblar_tablas():        
-        sql_roles = '''INSERT INTO Roles (RolId, Rol) 
+        sql_roles = '''INSERT INTO Roles (Id_rol, Rol) 
                     VALUES 
                         (1, "Administrador"),
                         (2, "Supervisor"),

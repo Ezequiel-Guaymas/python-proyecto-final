@@ -21,7 +21,7 @@ def eliminar(id, logical = True):
 def listar():
     sql = '''SELECT u.Id_usuario, u.Nombre, u.Apellido, u.Dni, u.Fecha_Nacimiento, u.Email, u.Domicilio, u.Nro_Telefonico, u.Usuario, u.Rol_Id, r.Rol
             FROM Usuarios u
-            INNER JOIN Roles r ON u.Rol_Id = r.Rol_Id
+            INNER JOIN Roles r ON u.Rol_Id = r.Id_rol
             WHERE u.Activo = 1;'''
     result = Db.consultar(sql)
     return result
@@ -29,7 +29,7 @@ def listar():
 def filtrar(usuario):    
     sql = '''SELECT u.Id_usuario, u.Nombre, u.Apellido, u.Dni, u.Fecha_Nacimiento, u.Email, u.Domicilio, u.Nro_Telefonico, u.Usuario, u.Rol_Id, r.Rol
             FROM Usuarios u
-            INNER JOIN Roles r ON u.Rol_Id = r.Rol_Id
+            INNER JOIN Roles r ON u.Rol_Id = r.Id_rol
             WHERE u.Usuario LIKE ? AND u.Activo = 1;'''    
     parametros = ('%{}%'.format(usuario),)    
     result = Db.consultar(sql, parametros)
@@ -51,7 +51,7 @@ def existe(usuario):
 def obtener_id(id):
     sql = '''SELECT u.Id_usuario, u.Nombre, u.Apellido, u.Dni, u.Fecha_Nacimiento, u.Email, u.Domicilio, u.Nro_Telefonico, u.Usuario, u.Rol_Id, r.Rol
             FROM Usuarios u
-            INNER JOIN Roles r ON u.Rol_Id = r.Rol_Id
+            INNER JOIN Roles r ON u.Rol_Id = r.Id_rol
             WHERE u.Id_usuario = ? AND u.Activo = 1;'''
     parametros = (id,)
     result = Db.consultar(sql, parametros, False)    
@@ -60,7 +60,7 @@ def obtener_id(id):
 def obtener_nombre_usuario(usuario):
     sql = '''SELECT u.Id_usuario, u.Nombre, u.Apellido, u.Dni, u.Fecha_Nacimiento, u.Email, u.Domicilio, u.Nro_Telefonico, u.Usuario, u.Rol_Id, r.Rol
             FROM Usuarios u
-            INNER JOIN Roles r ON u.Rol_Id = r.Rol_Id
+            INNER JOIN Roles r ON u.Rol_Id = r.Id_rol
             WHERE u.Id_usuario = ? AND u.Activo = 1;'''
     parametros = (usuario,)
     result = Db.consultar(sql, parametros, False)    

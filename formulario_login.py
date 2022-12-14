@@ -104,10 +104,11 @@ class Login(tk.Toplevel):
                 if user.validar(usuario, contrasenia):                    
                     usuario = user.obtener_nombre_usuario(usuario)
                     if usuario is not None:
-                        if usuario[8] == "Administrador":
+                        if usuario[10] == "Administrador":
                             Dashboard(self.master)
-                            self.destroy()
-                        elif usuario[8] == "Cliente":
+                            #self.destroy()
+                            print("Mostrar pantalla para usuario con rol de Administrador")
+                        elif usuario[10] == "Cliente":
                             # TODO chequear el rol del usuario para abrir el menu/ventana correspondiente
                             print("Mostrar pantalla para usuario con rol de Cliente")
                     else:

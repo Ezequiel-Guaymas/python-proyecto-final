@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
 from formulario_login import Login
-from dal.db import Db
+from dal.db2 import Db
 
 class App:
     def __init__(self, root, title):
