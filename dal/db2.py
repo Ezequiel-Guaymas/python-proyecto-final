@@ -57,7 +57,7 @@ class Db:
             for tabla, sql in tablas.items():
                 print(f"Creando tabla {tabla}")
                 cursor.execute(sql)
-                #cnn.commit() #
+                cnn.commit() #
                 # TODO agregar commit
             
     @staticmethod
@@ -76,11 +76,11 @@ class Db:
             for tabla, sql in tablas.items():
                 print(f"Poblando tabla {tabla}")
                 cursor.execute(f"SELECT COUNT(*) FROM {tabla}")
-                #cnn.commit() #
+                cnn.commit() #
                 count = int(cursor.fetchone()[0])
                 if count == 0:
                     cursor.execute(sql)
-                    #cnn.commit() #
+                    cnn.commit() #
 
     @staticmethod
     def formato_fecha_db(fecha):

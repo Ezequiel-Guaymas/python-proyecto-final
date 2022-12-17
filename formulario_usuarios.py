@@ -1,8 +1,9 @@
 from tkinter import *
 import tkinter.font as tkFont
 import tkinter.ttk as ttk
+import tkinter.messagebox as tkMsgBox
 import bll.usuarios as user
-from frmuser import User
+from formulario_user import User
 
 class Users(Toplevel):
     def __init__(self, master=None):
@@ -10,7 +11,7 @@ class Users(Toplevel):
         self.master = master
         self.select_id = -1        
         self.title("Listado de Usuarios")        
-        width=800
+        width=1000
         height=500
         screenwidth = self.winfo_screenwidth()
         screenheight = self.winfo_screenheight()
@@ -26,22 +27,24 @@ class Users(Toplevel):
         GLabel_464["text"] = "Usuarios:"
         GLabel_464.place(x=10,y=10,width=70,height=25)
 
-        tv = ttk.Treeview(self, columns=("usuario", "apellido", "nombre", "email", "rol"), name="tvUsuarios")
-        tv.column("#0", width=78)
+        tv = ttk.Treeview(self, columns=("usuario", "apellido", "nombre", "email", "domicilio", "rol"), name="tvUsuarios")
+        tv.column("#0", width=78) #id
         tv.column("usuario", width=100, anchor=CENTER)
         tv.column("apellido", width=150, anchor=CENTER)
         tv.column("nombre", width=150, anchor=CENTER)
         tv.column("email", width=150, anchor=CENTER)
+        tv.column("domicilio", width=200, anchor=CENTER)
         tv.column("rol", width=120, anchor=CENTER)
 
         tv.heading("#0", text="Id", anchor=CENTER)
         tv.heading("usuario", text="Usuario", anchor=CENTER)
         tv.heading("apellido", text="Apellido", anchor=CENTER)
         tv.heading("nombre", text="Nombre", anchor=CENTER)
-        tv.heading("email", text="Correo electrónico", anchor=CENTER)
+        tv.heading("email", text="Email", anchor=CENTER)
+        tv.heading("domicilio", text="Domicilio", anchor=CENTER)
         tv.heading("rol", text="Rol", anchor=CENTER)
         tv.bind("<<TreeviewSelect>>", self.obtener_fila)
-        tv.place(x=10,y=40,width=750,height=300)          
+        tv.place(x=10,y=40,width=950,height=400)          
         
         self.refrescar()
 
@@ -49,28 +52,28 @@ class Users(Toplevel):
         btn_agregar = Button(self)
         btn_agregar["bg"] = "#f0f0f0"        
         btn_agregar["font"] = ft
-        btn_agregar["fg"] = "#000000"
+        btn_agregar["fg"] = "#cc0000"
         btn_agregar["justify"] = "center"
         btn_agregar["text"] = "Agregar"
-        btn_agregar.place(x=530,y=10,width=70,height=25)
+        btn_agregar.place(x=730,y=10,width=70,height=25)
         btn_agregar["command"] = self.agregar
 
         btn_editar = Button(self)
         btn_editar["bg"] = "#f0f0f0"        
         btn_editar["font"] = ft
-        btn_editar["fg"] = "#000000"
+        btn_editar["fg"] = "#cc0000"
         btn_editar["justify"] = "center"
         btn_editar["text"] = "Editar"
-        btn_editar.place(x=610,y=10,width=70,height=25)
+        btn_editar.place(x=810,y=10,width=70,height=25)
         btn_editar["command"] = self.editar
         
         btn_eliminar = Button(self)
         btn_eliminar["bg"] = "#f0f0f0"        
         btn_eliminar["font"] = ft
-        btn_eliminar["fg"] = "#000000"
+        btn_eliminar["fg"] = "#cc0000"
         btn_eliminar["justify"] = "center"
         btn_eliminar["text"] = "Eliminar"
-        btn_eliminar.place(x=690,y=10,width=70,height=25)
+        btn_eliminar.place(x=890,y=10,width=70,height=25)
         btn_eliminar["command"] = self.eliminar
 
     def obtener_fila(self, event):
@@ -89,7 +92,10 @@ class Users(Toplevel):
         User(self, True, self.select_id)
 
     def eliminar(self):
-        pass
+        answer =  tkMsgBox.askokcancel(self.master.master.title(), "¿Está seguro de eliminar este registro?")   
+        if answer:
+            user.eliminar(self.select_id)
+            self.refrescar()
 
     # https://www.youtube.com/watch?v=n0usdtoU5cE
     def refrescar(self):        
@@ -98,4 +104,4 @@ class Users(Toplevel):
             tvUsuarios.delete(record)
         usuarios = user.listar()
         for usuario in usuarios:
-            tvUsuarios.insert("", END, text=usuario[0], values=(usuario[6], usuario[1], usuario[2], usuario[5], usuario[8])) 
+            tvUsuarios.insert("", END, text=usuario[0], values=(usuario[8], usuario[2], usuario[1], usuario[5], usuario[6], usuario[10])) 

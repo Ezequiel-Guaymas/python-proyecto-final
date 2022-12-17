@@ -4,11 +4,13 @@ import tkinter.font as tkFont
 import tkinter.messagebox as tkMsgBox
 import bll.usuarios as user
 import bll.roles as rol
+from datetime import date
 
 class User(Toplevel):
     def __init__(self, master=None, isAdmin = False, user_id = None):        
         super().__init__(master)
-        self.master = master        
+        self.master = master
+        self.user_id = user_id       
         self.title("Registro de cuenta")        
         width=443
         height=423
@@ -178,7 +180,7 @@ class User(Toplevel):
         GButton_825["justify"] = "center"
         GButton_825["text"] = "Aceptar"
         GButton_825.place(x=270,y=370,width=70,height=25)
-        GButton_825["command"] = self.GButton_825_command
+        GButton_825["command"] = self.aceptar
         
         GButton_341 = Button(self)
         GButton_341["bg"] = "#f0f0f0"
@@ -196,13 +198,14 @@ class User(Toplevel):
                tkMsgBox.showerror(self.master.title(), "Se produjo un error al obtener los datos del usuario, reintente nuevamente")
                self.destroy()
             else:
-                # TODO bloquear el campo usuario
                 GLineEdit_871.insert(0, usuario[1])
                 GLineEdit_911.insert(0, usuario[2])
-                GLineEdit_208.insert(0, usuario[3])
+                fecha_nac = date(int(usuario[3][:4]), int(usuario[3][5:7]), int(usuario[3][8:]))
+                GLineEdit_208.insert(0, fecha_nac.strftime(r"%d/%m/%Y"))
                 GLineEdit_234.insert(0, usuario[4])
                 GLineEdit_384.insert(0, usuario[5])
-                GLineEdit_481.insert(0, usuario[6])                
+                GLineEdit_481.insert(0, usuario[6])
+                GLineEdit_481["state"] = "disabled"           
                 cb_roles.set(usuario[8])
 
     def get_value(self, name):
@@ -214,7 +217,7 @@ class User(Toplevel):
     def GButton_341_command(self):
         self.destroy()
 
-    def GButton_825_command(self):
+    def aceptar(self):
         try:            
             apellido = self.get_value("txtApellido")
             nombre = self.get_value("txtNombre")            
@@ -228,15 +231,24 @@ class User(Toplevel):
             rol_id = self.get_index("cbRoles")
 
             # TODO validar los datos antes de ingresar
-            if not user.existe(usuario):
-                user.agregar(apellido, nombre, fecha_nac, dni, email, usuario, contrasenia, rol_id)
-                tkMsgBox.showinfo(self.master.title(), "Registro agregado!!!!!!")                
-                try:
-                    self.master.refrescar()
-                except Exception as ex:
-                    print(ex)
-                self.destroy()                
+            if self.user_id is None:
+                print("Alta de usuario")
+                if not user.existe(usuario):
+                    user.agregar(apellido, nombre, fecha_nac, dni, email, usuario, contrasenia, rol_id)
+                    tkMsgBox.showinfo(self.master.title(), "Registro agregado!!!!!!")                
+                    try:
+                        self.master.refrescar()
+                    except Exception as ex:
+                        print(ex)
+                    self.destroy()                
+                else:
+                    tkMsgBox.showwarning(self.master.title(), "Usuario existente en nuestros registros")
             else:
-                tkMsgBox.showwarning(self.master.title(), "Usuario existente en nuestros registros")
+                print("Actualizacion de usuario")
+                user.actualizar(self.user_id, apellido, nombre, fecha_nac, dni, email, contrasenia, rol_id)  # TODO ver el tema de la contraseña
+                tkMsgBox.showinfo(self.master.title(), "Registro modificado!!!!!!")                
+                self.master.refrescar()
+                self.destroy()  
+
         except Exception as ex:
             tkMsgBox.showerror(self.master.title(), str(ex))
