@@ -273,9 +273,11 @@ class User(Toplevel):
         GButton_129["text"] = "CANCELAR"
         GButton_129.place(x=400,y=550,width=130,height=32)
         GButton_129["command"] = self.cancelar
-        
+        print(user_id)
         if user_id is not None:
+            print(user_id)
             usuario = user.obtener_id(user_id)
+            print("279")
             print(usuario)
             if usuario is None:
                tkMsgBox.showerror(self.master.title(), "Se produjo un error al obtener los datos del usuario, reintente nuevamente")

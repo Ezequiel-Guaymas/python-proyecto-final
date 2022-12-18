@@ -11,7 +11,7 @@ class Users(Toplevel):
         self.master = master
         self.select_id = -1        
         self.title("Listado de Usuarios")        
-        width=1000
+        width=1040
         height=500
         screenwidth = self.winfo_screenwidth()
         screenheight = self.winfo_screenheight()
@@ -27,24 +27,30 @@ class Users(Toplevel):
         GLabel_464["text"] = "Usuarios:"
         GLabel_464.place(x=10,y=10,width=70,height=25)
 
-        tv = ttk.Treeview(self, columns=("usuario", "apellido", "nombre", "email", "domicilio", "rol"), name="tvUsuarios")
-        tv.column("#0", width=78) #id
-        tv.column("usuario", width=100, anchor=CENTER)
-        tv.column("apellido", width=150, anchor=CENTER)
-        tv.column("nombre", width=150, anchor=CENTER)
-        tv.column("email", width=150, anchor=CENTER)
-        tv.column("domicilio", width=200, anchor=CENTER)
-        tv.column("rol", width=120, anchor=CENTER)
+        tv = ttk.Treeview(self, columns=("usuario", "nombre", "apellido", "dni", "fecha_nac", "email", "domicilio", "nro_telefono", "rol"), name="tvUsuarios")
+        tv.column("#0", width=60) #id
+        tv.column("usuario", width=80, anchor=CENTER)
+        tv.column("nombre", width=160, anchor=CENTER)
+        tv.column("apellido", width=100, anchor=CENTER)
+        tv.column("dni", width=80, anchor=CENTER)
+        tv.column("fecha_nac", width=80, anchor=CENTER)
+        tv.column("email", width=130, anchor=CENTER)
+        tv.column("domicilio", width=130, anchor=CENTER)
+        tv.column("nro_telefono", width=90, anchor=CENTER)
+        tv.column("rol", width=100, anchor=CENTER)
 
         tv.heading("#0", text="Id", anchor=CENTER)
         tv.heading("usuario", text="Usuario", anchor=CENTER)
-        tv.heading("apellido", text="Apellido", anchor=CENTER)
         tv.heading("nombre", text="Nombre", anchor=CENTER)
+        tv.heading("apellido", text="Apellido", anchor=CENTER)
+        tv.heading("dni", text="DNI", anchor=CENTER)
+        tv.heading("fecha_nac", text="Fecha Nac.", anchor=CENTER)
         tv.heading("email", text="Email", anchor=CENTER)
         tv.heading("domicilio", text="Domicilio", anchor=CENTER)
+        tv.heading("nro_telefono", text="Nro. Telefono", anchor=CENTER)
         tv.heading("rol", text="Rol", anchor=CENTER)
         tv.bind("<<TreeviewSelect>>", self.obtener_fila)
-        tv.place(x=10,y=40,width=950,height=400)          
+        tv.place(x=10,y=40,width=1020,height=400)          
         
         self.refrescar()
 
@@ -55,7 +61,7 @@ class Users(Toplevel):
         btn_agregar["fg"] = "#cc0000"
         btn_agregar["justify"] = "center"
         btn_agregar["text"] = "Agregar"
-        btn_agregar.place(x=730,y=10,width=70,height=25)
+        btn_agregar.place(x=800,y=10,width=70,height=25)
         btn_agregar["command"] = self.agregar
 
         btn_editar = Button(self)
@@ -64,7 +70,7 @@ class Users(Toplevel):
         btn_editar["fg"] = "#cc0000"
         btn_editar["justify"] = "center"
         btn_editar["text"] = "Editar"
-        btn_editar.place(x=810,y=10,width=70,height=25)
+        btn_editar.place(x=880,y=10,width=70,height=25)
         btn_editar["command"] = self.editar
         
         btn_eliminar = Button(self)
@@ -73,8 +79,17 @@ class Users(Toplevel):
         btn_eliminar["fg"] = "#cc0000"
         btn_eliminar["justify"] = "center"
         btn_eliminar["text"] = "Eliminar"
-        btn_eliminar.place(x=890,y=10,width=70,height=25)
+        btn_eliminar.place(x=960,y=10,width=70,height=25)
         btn_eliminar["command"] = self.eliminar
+
+        btn_salir = Button(self)
+        btn_salir["bg"] = "#f0f0f0"        
+        btn_salir["font"] = ft
+        btn_salir["fg"] = "#cc0000"
+        btn_salir["justify"] = "center"
+        btn_salir["text"] = "Salir"
+        btn_salir.place(x=890,y=450,width=140,height=40)
+        btn_salir["command"] = self.salir
 
     def obtener_fila(self, event):
         tvUsuarios = self.nametowidget("tvUsuarios")
@@ -104,4 +119,7 @@ class Users(Toplevel):
             tvUsuarios.delete(record)
         usuarios = user.listar()
         for usuario in usuarios:
-            tvUsuarios.insert("", END, text=usuario[0], values=(usuario[8], usuario[2], usuario[1], usuario[5], usuario[6], usuario[10])) 
+            tvUsuarios.insert("", END, text=usuario[0], values=(usuario[8], usuario[1], usuario[2], usuario[3], usuario[4], usuario[5], usuario[6], usuario[7], usuario[10])) 
+
+    def salir(self):
+        self.destroy()

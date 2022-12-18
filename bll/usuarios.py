@@ -55,7 +55,7 @@ def obtener_id(id):
             WHERE u.Id_usuario = ? AND u.Activo = 1;'''
     parametros = (id,)
     result = Db.consultar(sql, parametros, False)    
-    return 
+    return result
     
 def obtener_nombre_usuario(usuario):
     sql = '''SELECT u.Id_usuario, u.Nombre, u.Apellido, u.Dni, u.Fecha_Nacimiento, u.Email, u.Domicilio, u.Nro_Telefonico, u.Usuario, u.Rol_Id, r.Rol
