@@ -4,7 +4,8 @@ import tkinter.messagebox as tkMsgBox
 from formulario_user import User
 from formulario_tableroAdmi import TableroAdmi
 import bll.usuarios as user
-from formulario_tableroPedidoCliente import Pedido_Usuario
+#from formulario_tableroPedidoCliente import Pedido_Usuario
+from formulario_ClientePedido import Pedido
 
 
 
@@ -101,7 +102,7 @@ class Login(tk.Toplevel):
                             TableroAdmi(self.master)
                             self.destroy()
                         elif usuario[10] == "Cliente":
-                            Pedido_Usuario(self.master)
+                            Pedido(self.master)
                             # TODO chequear el rol del usuario para abrir el menu/ventana correspondiente
                     else:
                         tkMsgBox.showerror(self.master.title(), "Se produjo un error al obtener los datos del usuario, ingrese nuevamente")
@@ -115,8 +116,8 @@ class Login(tk.Toplevel):
     def cancelar(self):
         self.destroy()
 
-    def abrir_Pedido_Usuario(self):
-        Pedido_Usuario(self.master)    
+    '''def abrir_Pedido_Cliente(self):
+        Pedido(self.master) '''   
 
     def abrir_user(self):
         User(self.master)
