@@ -1,4 +1,5 @@
 # python-proyecto-final-
-Proyecto Final Supermark
-prueba de desarrollo para trabajo final
-segunda prueba del desarrollo
+Proyecto Final Supermarket
+Integrante : Guaymas Ezequiel Federico Antonio
+Comision: CN!
+
