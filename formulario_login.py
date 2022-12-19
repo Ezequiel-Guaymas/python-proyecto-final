@@ -91,26 +91,18 @@ class Login(tk.Toplevel):
         try:
             txtUsuario = self.nametowidget("txtUsuario")
             usuario = txtUsuario.get()
-            print(usuario)
-
             txtContrasenia = self.nametowidget("txtContrasenia")
             contrasenia = txtContrasenia.get()
-            print(contrasenia)
             if usuario != "":
                 if user.validar(usuario, contrasenia):                    
                     usuario = user.obtener_nombre_usuario(usuario)
-                    print(usuario)
                     if usuario is not None:
                         if usuario[10] == "Administrador":
-                            print("Mostrar pantalla para usuario con rol de Administrador")
                             TableroAdmi(self.master)
                             self.destroy()
                         elif usuario[10] == "Cliente":
                             Pedido_Usuario(self.master)
-                            #Dashboard(self.master)
-                            #self.destroy()
                             # TODO chequear el rol del usuario para abrir el menu/ventana correspondiente
-                            print("Mostrar pantalla para usuario con rol de Cliente")
                     else:
                         tkMsgBox.showerror(self.master.title(), "Se produjo un error al obtener los datos del usuario, ingrese nuevamente")
                 else:
