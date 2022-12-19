@@ -2,7 +2,7 @@ import sqlite3
 from datetime import date
 import hashlib
 
-database = "Supermarket.db" # todo: por ahora ponemos el nombre de la base aqui, ver mejor opcion
+database = "Supermarket.db"
 
 class Db:
     @staticmethod
@@ -49,8 +49,26 @@ class Db:
                             "Activo"	INTEGER NOT NULL DEFAULT 1,
                             PRIMARY KEY("Id_rol")
                         );'''
+        sql_productos = '''CREATE TABLE IF NOT EXISTS "Productos" (
+                            "Id_producto"	INTEGER NOT NULL,
+                            "Nombre"	TEXT(30) NOT NULL,
+                            "Descripcion"	TEXT(50) NOT NULL,
+                            "Marca"	TEXT(30) NOT NULL,
+                            "Precio"	REAL(10) NOT NULL,
+                            "Cantidad"	INTEGER NOT NULL,
+                            "Fecha_Elabor"	TEXT(20) NOT NULL,
+                            "Fecha_Venc"	TEXT(20) NOT NULL,
+                            "Categoria_Id"	INTEGER,
+                            FOREIGN KEY("Categoria_id") REFERENCES "Categorias de Productos"("Id_categoria"),
+                            PRIMARY KEY("Id_producto" AUTOINCREMENT)
+                        );'''
+        sql_categorias = '''CREATE TABLE IF NOT EXISTS "Categorias" (
+                            "Id_categoria"	INTEGER NOT NULL,
+                            "Categoria"	TEXT(50) NOT NULL,
+                            PRIMARY KEY("Id_categoria")
+                        )'''
 
-        tablas = {"Usuarios": sql_usuarios, "Roles": sql_roles}
+        tablas = {"Usuarios": sql_usuarios, "Roles": sql_roles, "Productos": sql_productos, "Categorias": sql_categorias}
 
         with sqlite3.connect(database) as cnn:
             cursor = cnn.cursor()
@@ -69,7 +87,20 @@ class Db:
                         (3, "Operador"),
                         (4, "Cliente");'''
 
-        tablas = {"Roles": sql_roles}
+        sql_categorias = '''INSERT INTO Categorias (Id_categoria, Categoria) 
+                    VALUES 
+                        (1, "Aseo"),
+                        (2, "Alimentos Frescos"),
+                        (3, "Alimentos Congelados"),
+                        (4, "Bebidas"),
+                        (5, "Bebidas con Alcohol"),
+                        (6, "Cuidado Personal"),
+                        (7, "Carnes"),
+                        (8, "Despensas"),
+                        (9, "Golosinas"),
+                        (10, "Lacteos");'''
+
+        tablas = {"Roles": sql_roles, "Categorias": sql_categorias}
 
         with sqlite3.connect(database) as cnn:
             cursor = cnn.cursor()

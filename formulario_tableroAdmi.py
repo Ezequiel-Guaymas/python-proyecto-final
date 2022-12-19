@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
 from formulario_usuarios import Users
+from formulario_inventario import Inventario
 
 class TableroAdmi(tk.Toplevel):
     def __init__(self, master=None):
@@ -67,7 +68,7 @@ class TableroAdmi(tk.Toplevel):
         Users(self)
 
     def abrir_productos(self):
-        print("productos")
+        Inventario(self)
 
     def abrir_pedidos(self):
         print("pedidos")
