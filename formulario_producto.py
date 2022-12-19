@@ -2,8 +2,8 @@ from tkinter import *
 import tkinter.ttk as ttk
 import tkinter.font as tkFont
 import tkinter.messagebox as tkMsgBox
-import bll.productos as producto
-import bll.categorias as categoria
+import bll.productos as produc
+import bll.categorias as categ
 from datetime import date
 
 class Producto(Toplevel):
@@ -130,7 +130,7 @@ class Producto(Toplevel):
         GLabel_61["text"] = "Fecha Venc.:"
         GLabel_61.place(x=10,y=250,width=124,height=30)
 
-        GLineEdit_366 = Entry(self, show="*", name="txtVenc")
+        GLineEdit_366 = Entry(self, name="txtVenc")
         GLineEdit_366["borderwidth"] = "1px"
         ft = tkFont.Font(family='Times',size=10)
         GLineEdit_366["font"] = ft
@@ -147,7 +147,7 @@ class Producto(Toplevel):
         GLabel_975["text"] = "Categoria:"
         GLabel_975.place(x=10,y=330,width=122,height=30)
         
-        categorias = dict(categoria.listar())
+        categorias = dict(categ.listar())
         if isAdmin:
             cb_categorias = ttk.Combobox(self, state="readonly", values=list(categorias.values()), name="cbCategorias")
         cb_categorias.place(x=140,y=330,width=230,height=30)
@@ -173,7 +173,7 @@ class Producto(Toplevel):
         GButton_341["command"] = self.GButton_341_command
 
         if produc_id is not None:
-            producto = producto.obtener_id(produc_id)
+            producto = produc.obtener_id(produc_id)
             if producto is None:
                tkMsgBox.showerror(self.master.title(), "Se produjo un error al obtener los datos del producto, reintente nuevamente")
                self.destroy()
@@ -185,7 +185,7 @@ class Producto(Toplevel):
                 GLineEdit_208.insert(0, producto[3])
                 #GLineEdit_208["state"] = "disabled"
                 GLineEdit_234.insert(0, producto[4])
-                GLineEdit_234.insert(0, producto[5])
+                GLineEdit_384.insert(0, producto[5])
                 fecha_elabor = date(int(producto[6][:4]), int(producto[6][5:7]), int(producto[6][8:]))
                 GLineEdit_481.insert(0, fecha_elabor.strftime(r"%d/%m/%Y"))
                 #GLineEdit_481["state"] = "disabled"
@@ -213,12 +213,12 @@ class Producto(Toplevel):
             cantidad = self.get_value("txtCantidad")            
             fecha_elabor = self.get_value("txtElabor")
             fecha_venc = self.get_value("txtVenc")            
-            rol_id = self.get_index("cbCategorias")
+            categoria_id = self.get_index("cbCategorias")
 
             if self.produc_id is None:
                 print("Alta del producto")
-                if not producto.existe(producto):
-                    producto.agregar(nombre, descripcion, marca, precio, cantidad, fecha_elabor, fecha_venc, rol_id)
+                if not produc.existe(nombre):
+                    produc.agregar(nombre, descripcion, marca, precio, cantidad, fecha_elabor, fecha_venc, categoria_id)
                     tkMsgBox.showinfo(self.master.title(), "Producto agregado!!!!!!")                
                     try:
                         self.master.refrescar()
@@ -229,7 +229,7 @@ class Producto(Toplevel):
                     tkMsgBox.showwarning(self.master.title(), "Producto existente en nuestros inventario")
             else:
                 print("Actualizacion de producto")
-                producto.actualizar(self.user_id, precio, cantidad)  
+                produc.actualizar(self.produc_id, precio, cantidad)  
                 tkMsgBox.showinfo(self.master.title(), "Producto modificado!!!!!!")                
                 self.master.refrescar()
                 self.destroy()  

@@ -6,8 +6,8 @@ def agregar(nombre, descripcion, marca, precio, cantidad, fecha_elabor, fecha_ve
     Db.ejecutar(sql, parametros)
 
 def actualizar(id, precio, cantidad ):    
-    sql = "UPDATE Productos SET Precio = ?, Cantidad = ? WHERE Id_producto = ?"
-    parametros = (precio,cantidad, id)
+    sql = "UPDATE Productos SET Precio = ?, Cantidad = ? WHERE Id_producto = ?;"
+    parametros = (precio, cantidad, id)
     Db.ejecutar(sql, parametros)    
 
 def eliminar(id, logical = True):    
