@@ -1,6 +1,7 @@
 # python-proyecto-final-
 Proyecto Final Supermarket
 Integrante : Guaymas Ezequiel Federico Antonio
+Nombre del grupo: Code 10
 Comision: CN1
 
 Datos para entrar en la cuenta:

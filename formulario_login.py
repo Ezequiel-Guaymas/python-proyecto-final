@@ -4,7 +4,6 @@ import tkinter.messagebox as tkMsgBox
 from formulario_user import User
 from formulario_tableroAdmi import TableroAdmi
 import bll.usuarios as user
-#from formulario_tableroPedidoCliente import Pedido_Usuario
 from formulario_ClientePedido import Pedido
 
 
@@ -114,10 +113,7 @@ class Login(tk.Toplevel):
             tkMsgBox.showerror(self.master.title(), str(ex))
 
     def cancelar(self):
-        self.destroy()
-
-    '''def abrir_Pedido_Cliente(self):
-        Pedido(self.master) '''   
+        self.destroy()   
 
     def abrir_user(self):
         User(self.master)
