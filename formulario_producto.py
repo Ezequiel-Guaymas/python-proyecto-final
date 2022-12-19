@@ -179,20 +179,21 @@ class Producto(Toplevel):
                self.destroy()
             else:
                 GLineEdit_871.insert(0, producto[1])
-                #GLineEdit_871["state"] = "disabled" 
+                GLineEdit_871["state"] = "disabled" 
                 GLineEdit_911.insert(0, producto[2])
-                #GLineEdit_911["state"] = "disabled"
+                GLineEdit_911["state"] = "disabled"
                 GLineEdit_208.insert(0, producto[3])
-                #GLineEdit_208["state"] = "disabled"
+                GLineEdit_208["state"] = "disabled"
                 GLineEdit_234.insert(0, producto[4])
                 GLineEdit_384.insert(0, producto[5])
                 fecha_elabor = date(int(producto[6][:4]), int(producto[6][5:7]), int(producto[6][8:]))
                 GLineEdit_481.insert(0, fecha_elabor.strftime(r"%d/%m/%Y"))
-                #GLineEdit_481["state"] = "disabled"
+                GLineEdit_481["state"] = "disabled"
                 fecha_venc = date(int(producto[7][:4]), int(producto[7][5:7]), int(producto[7][8:]))
                 GLineEdit_366.insert(0, fecha_venc.strftime(r"%d/%m/%Y"))
-                #GLineEdit_366["state"] = "disabled"           
+                GLineEdit_366["state"] = "disabled"           
                 cb_categorias.set(producto[8])
+                cb_categorias["state"] = "disabled"
 
 
     def get_value(self, name):
