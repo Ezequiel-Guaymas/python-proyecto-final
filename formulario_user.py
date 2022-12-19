@@ -277,7 +277,7 @@ class User(Toplevel):
         if user_id is not None:
             usuario = user.obtener_id(user_id)
             if usuario is None:
-               tkMsgBox.showerror(self.master.title(), "Se produjo un error al obtener los datos del usuario, reintente nuevamente")
+               tkMsgBox.showerror(self.master.title(), "Se produjo un error, seleccione un usuario.")
                self.destroy()
             else:
                 # TODO bloquear el campo usuario

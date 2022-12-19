@@ -175,7 +175,7 @@ class Producto(Toplevel):
         if produc_id is not None:
             producto = produc.obtener_id(produc_id)
             if producto is None:
-               tkMsgBox.showerror(self.master.title(), "Se produjo un error al obtener los datos del producto, reintente nuevamente")
+               tkMsgBox.showerror(self.master.title(), "Se produjo un error, selecciones un producto.")
                self.destroy()
             else:
                 GLineEdit_871.insert(0, producto[1])
