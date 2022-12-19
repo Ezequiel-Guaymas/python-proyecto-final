@@ -1,5 +1,3 @@
-#import tkinter as tk
-#import tkinter.font as tkFont
 from tkinter import *
 import tkinter.ttk as ttk
 import tkinter.font as tkFont
@@ -119,7 +117,7 @@ class User(Toplevel):
         GLabel_529["font"] = ft
         GLabel_529["fg"] = "#333333"
         GLabel_529["justify"] = "center"
-        GLabel_529["text"] = "AAAA-MM-DD"
+        GLabel_529["text"] = "DD/MM/AAAA"
         GLabel_529.place(x=370,y=190,width=141,height=25)
 
         GLabel_23= Label(self)
@@ -275,9 +273,12 @@ class User(Toplevel):
         GButton_129["text"] = "CANCELAR"
         GButton_129.place(x=400,y=550,width=130,height=32)
         GButton_129["command"] = self.cancelar
-        
+        print(user_id)
         if user_id is not None:
+            print(user_id)
             usuario = user.obtener_id(user_id)
+            print("279")
+            print(usuario)
             if usuario is None:
                tkMsgBox.showerror(self.master.title(), "Se produjo un error al obtener los datos del usuario, reintente nuevamente")
                self.destroy()
@@ -323,6 +324,19 @@ class User(Toplevel):
             rol_id = self.get_index("cbRoles")
 
             # TODO validar los datos antes de ingresar
+            if nombre == "":
+                tkMsgBox.showerror(self.master.title(), "Nombre es un valor requerido.")
+                return
+            if apellido == "":
+                tkMsgBox.showerror(self.master.title(), "Apellido es un valor requerido.")
+                return
+            # agregar los demas
+            # .....
+            
+            if contrasenia != confirmacion:
+                tkMsgBox.showerror(self.master.title(), "La contraseña con su confirmacion no tienen el mismo valor.")
+                return 
+            
             if self.user_id is None:
                 print("Alta de usuario")
                 if not user.existe(usuario):

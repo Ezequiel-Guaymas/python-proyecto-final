@@ -55,13 +55,13 @@ def obtener_id(id):
             WHERE u.Id_usuario = ? AND u.Activo = 1;'''
     parametros = (id,)
     result = Db.consultar(sql, parametros, False)    
-    return 
+    return result
     
 def obtener_nombre_usuario(usuario):
     sql = '''SELECT u.Id_usuario, u.Nombre, u.Apellido, u.Dni, u.Fecha_Nacimiento, u.Email, u.Domicilio, u.Nro_Telefonico, u.Usuario, u.Rol_Id, r.Rol
             FROM Usuarios u
             INNER JOIN Roles r ON u.Rol_Id = r.Id_rol
-            WHERE u.Id_usuario = ? AND u.Activo = 1;'''
+            WHERE Usuario = ? AND u.Activo = 1;'''
     parametros = (usuario,)
     result = Db.consultar(sql, parametros, False)    
     return result

@@ -1,8 +1,9 @@
 from tkinter import *
 import tkinter.font as tkFont
 import tkinter.ttk as ttk
+import tkinter.messagebox as tkMsgBox
 import bll.usuarios as user
-from frmuser import User
+from formulario_user import User
 
 class Users(Toplevel):
     def __init__(self, master=None):
@@ -10,7 +11,7 @@ class Users(Toplevel):
         self.master = master
         self.select_id = -1        
         self.title("Listado de Usuarios")        
-        width=800
+        width=1040
         height=500
         screenwidth = self.winfo_screenwidth()
         screenheight = self.winfo_screenheight()
@@ -26,22 +27,30 @@ class Users(Toplevel):
         GLabel_464["text"] = "Usuarios:"
         GLabel_464.place(x=10,y=10,width=70,height=25)
 
-        tv = ttk.Treeview(self, columns=("usuario", "apellido", "nombre", "email", "rol"), name="tvUsuarios")
-        tv.column("#0", width=78)
-        tv.column("usuario", width=100, anchor=CENTER)
-        tv.column("apellido", width=150, anchor=CENTER)
-        tv.column("nombre", width=150, anchor=CENTER)
-        tv.column("email", width=150, anchor=CENTER)
-        tv.column("rol", width=120, anchor=CENTER)
+        tv = ttk.Treeview(self, columns=("usuario", "nombre", "apellido", "dni", "fecha_nac", "email", "domicilio", "nro_telefono", "rol"), name="tvUsuarios")
+        tv.column("#0", width=60) #id
+        tv.column("usuario", width=80, anchor=CENTER)
+        tv.column("nombre", width=160, anchor=CENTER)
+        tv.column("apellido", width=100, anchor=CENTER)
+        tv.column("dni", width=80, anchor=CENTER)
+        tv.column("fecha_nac", width=80, anchor=CENTER)
+        tv.column("email", width=130, anchor=CENTER)
+        tv.column("domicilio", width=130, anchor=CENTER)
+        tv.column("nro_telefono", width=90, anchor=CENTER)
+        tv.column("rol", width=100, anchor=CENTER)
 
         tv.heading("#0", text="Id", anchor=CENTER)
         tv.heading("usuario", text="Usuario", anchor=CENTER)
-        tv.heading("apellido", text="Apellido", anchor=CENTER)
         tv.heading("nombre", text="Nombre", anchor=CENTER)
-        tv.heading("email", text="Correo electrónico", anchor=CENTER)
+        tv.heading("apellido", text="Apellido", anchor=CENTER)
+        tv.heading("dni", text="DNI", anchor=CENTER)
+        tv.heading("fecha_nac", text="Fecha Nac.", anchor=CENTER)
+        tv.heading("email", text="Email", anchor=CENTER)
+        tv.heading("domicilio", text="Domicilio", anchor=CENTER)
+        tv.heading("nro_telefono", text="Nro. Telefono", anchor=CENTER)
         tv.heading("rol", text="Rol", anchor=CENTER)
         tv.bind("<<TreeviewSelect>>", self.obtener_fila)
-        tv.place(x=10,y=40,width=750,height=300)          
+        tv.place(x=10,y=40,width=1020,height=400)          
         
         self.refrescar()
 
@@ -49,29 +58,38 @@ class Users(Toplevel):
         btn_agregar = Button(self)
         btn_agregar["bg"] = "#f0f0f0"        
         btn_agregar["font"] = ft
-        btn_agregar["fg"] = "#000000"
+        btn_agregar["fg"] = "#cc0000"
         btn_agregar["justify"] = "center"
         btn_agregar["text"] = "Agregar"
-        btn_agregar.place(x=530,y=10,width=70,height=25)
+        btn_agregar.place(x=800,y=10,width=70,height=25)
         btn_agregar["command"] = self.agregar
 
         btn_editar = Button(self)
         btn_editar["bg"] = "#f0f0f0"        
         btn_editar["font"] = ft
-        btn_editar["fg"] = "#000000"
+        btn_editar["fg"] = "#cc0000"
         btn_editar["justify"] = "center"
         btn_editar["text"] = "Editar"
-        btn_editar.place(x=610,y=10,width=70,height=25)
+        btn_editar.place(x=880,y=10,width=70,height=25)
         btn_editar["command"] = self.editar
         
         btn_eliminar = Button(self)
         btn_eliminar["bg"] = "#f0f0f0"        
         btn_eliminar["font"] = ft
-        btn_eliminar["fg"] = "#000000"
+        btn_eliminar["fg"] = "#cc0000"
         btn_eliminar["justify"] = "center"
         btn_eliminar["text"] = "Eliminar"
-        btn_eliminar.place(x=690,y=10,width=70,height=25)
+        btn_eliminar.place(x=960,y=10,width=70,height=25)
         btn_eliminar["command"] = self.eliminar
+
+        btn_salir = Button(self)
+        btn_salir["bg"] = "#f0f0f0"        
+        btn_salir["font"] = ft
+        btn_salir["fg"] = "#cc0000"
+        btn_salir["justify"] = "center"
+        btn_salir["text"] = "Salir"
+        btn_salir.place(x=890,y=450,width=140,height=40)
+        btn_salir["command"] = self.salir
 
     def obtener_fila(self, event):
         tvUsuarios = self.nametowidget("tvUsuarios")
@@ -89,7 +107,10 @@ class Users(Toplevel):
         User(self, True, self.select_id)
 
     def eliminar(self):
-        pass
+        answer =  tkMsgBox.askokcancel(self.master.master.title(), "¿Está seguro de eliminar este registro?")   
+        if answer:
+            user.eliminar(self.select_id)
+            self.refrescar()
 
     # https://www.youtube.com/watch?v=n0usdtoU5cE
     def refrescar(self):        
@@ -98,4 +119,7 @@ class Users(Toplevel):
             tvUsuarios.delete(record)
         usuarios = user.listar()
         for usuario in usuarios:
-            tvUsuarios.insert("", END, text=usuario[0], values=(usuario[6], usuario[1], usuario[2], usuario[5], usuario[8])) 
+            tvUsuarios.insert("", END, text=usuario[0], values=(usuario[8], usuario[1], usuario[2], usuario[3], usuario[4], usuario[5], usuario[6], usuario[7], usuario[10])) 
+
+    def salir(self):
+        self.destroy()
