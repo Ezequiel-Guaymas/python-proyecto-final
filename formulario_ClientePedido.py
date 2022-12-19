@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
 
-class Pedido:
+class Pedido(tk.Toplevel):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master        
@@ -59,7 +59,7 @@ class Pedido:
         GButton_372["justify"] = "center"
         GButton_372["text"] = "BUSCAR"
         GButton_372.place(x=400,y=70,width=125,height=30)
-        GButton_372["command"] = self.GButton_372_command
+        GButton_372["command"] = self.buscar_producto
 
         GLineEdit_819=tk.Entry(self)
         GLineEdit_819["borderwidth"] = "1px"
@@ -114,7 +114,7 @@ class Pedido:
         GButton_940["justify"] = "center"
         GButton_940["text"] = "CARGAR"
         GButton_940.place(x=400,y=270,width=124,height=30)
-        GButton_940["command"] = self.GButton_940_command
+        GButton_940["command"] = self.cargar_al_pedido
 
         GLabel_108=tk.Label(self)
         GLabel_108["borderwidth"] = "0px"
@@ -178,7 +178,7 @@ class Pedido:
         GButton_660["justify"] = "center"
         GButton_660["text"] = "BORRAR"
         GButton_660.place(x=400,y=560,width=124,height=30)
-        GButton_660["command"] = self.GButton_660_command
+        GButton_660["command"] = self.borrar_del_pedido
 
         GLabel_500=tk.Label(self)
         GLabel_500["borderwidth"] = "0px"
@@ -197,7 +197,7 @@ class Pedido:
         GButton_140["justify"] = "center"
         GButton_140["text"] = "CONFIRMAR"
         GButton_140.place(x=210,y=600,width=175,height=30)
-        GButton_140["command"] = self.GButton_140_command
+        GButton_140["command"] = self.confirmar_pedido
 
         GButton_156=tk.Button(self)
         GButton_156["bg"] = "#f0f0f0"
@@ -207,25 +207,25 @@ class Pedido:
         GButton_156["justify"] = "center"
         GButton_156["text"] = "SALIR"
         GButton_156.place(x=400,y=600,width=122,height=30)
-        GButton_156["command"] = self.GButton_156_command
+        GButton_156["command"] = self.salir
 
-    def GButton_372_command(self):
-        print("command")
-
-
-    def GButton_940_command(self):
-        print("command")
+    def buscar_producto(self):
+        print("buscando producto")
 
 
-    def GButton_660_command(self):
-        print("command")
+    def cargar_al_pedido(self):
+        print("cargando al pedido")
 
 
-    def GButton_140_command(self):
-        print("command")
+    def borrar_del_pedido(self):
+        print("borrando producto")
 
 
-    def GButton_156_command(self):
-        print("command")
+    def confirmar_pedido(self):
+        print("confirmando pedido")
+
+
+    def salir(self):
+        self.destroy()
 
 
